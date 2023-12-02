@@ -73,3 +73,8 @@ def memoize(fn: Callable) -> Callable:
         return getattr(self, attr_name)
 
     return property(memoized)
+
+if __name__ == '__main__':
+    url = "https://api.github.com"
+    print(get_json(url))
+    
