@@ -130,7 +130,7 @@ class TestMemoize(unittest.TestCase):
         first_call_result = newTestClass.a_property()
         second_call_result = newTestClass.a_property()
 
-        mock_test.assert_call_once()
+        mock_test.assert_called_once()
         self.assertEqual(first_call_result, second_call_result)
         patcher.stop()
 
