@@ -2,7 +2,8 @@
 """unit test"""
 
 from parameterized import parameterized
-from unittest.mock import patch, Mock
+from unittest.mock import patch
+import requests
 import unittest
 from utils import access_nested_map, get_json
 
@@ -30,27 +31,28 @@ class TestGetJson(unittest.TestCase):
 
     @parameterized.expand([
         (
-            {
-                "test_url": "http://example.com",
-                "test_payload": {"payload": True}
-            }
+            (
+                "http://example.com",
+                {"payload": True}
+            )
         ),
         (
-            {
-                    "test_url": "http://holberton.io",
-                    "test_payload": {"payload": False}
-            }
+            (
+                "http://holberton.io",
+                {"payload": False}
+            )
         )
     ])
-    def test_get_json(self, test_case, mock_get):
-        with self.subTest(test_case=test_case):
-            mock_get.return_value = Mock()
-            mock_get.return_value.json.return_value =\
-                test_case['test_payload']
+    def test_get_json(self, test_url, test_payload):
+        return_value = {"return_value.json.return_value": test_payload}
+        patcher = patch("requests.get", **return_value)
+        mock = patcher.start()
+        result = get_json(test_url)
+        self.assertEqual(result, test_payload)
 
-            result = get_json(test_case['test_url'])
-            mock_get.assert_called_once_with(test_case['test_url'])
-            self.assertEqual(result, test_case['test_payload'])
+        mock.assert_called_once()
+
+        patcher.stop()
 
 
 if __name__ == "__main__":
