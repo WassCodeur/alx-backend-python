@@ -9,7 +9,10 @@ from utils import access_nested_map, get_json, memoize
 
 
 class TestAccessNestedMap(unittest.TestCase):
-    """ test access nested map tests cases"""
+    """ test access nested map tests cases
+
+    inherit from unittest.TestCase
+    """
 
     @parameterized.expand([
         ({"a": 1}, ("a",), 1),
