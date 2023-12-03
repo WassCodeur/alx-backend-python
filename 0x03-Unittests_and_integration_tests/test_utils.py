@@ -27,29 +27,31 @@ class TestAccessNestedMap(unittest.TestCase):
 
 
 class TestGetJson(unittest.TestCase):
-    @patch('utils.requests.get')
-    def test_get_json(self, mock_get):
-        test_cases = [
-                {
-                    "test_url": "http://example.com",
-                    "test_payload": {"payload": True}
-                    },
-                {
+
+    @parameterized.expand([
+        (
+            {
+                "test_url": "http://example.com",
+                "test_payload": {"payload": True}
+            }
+        ),
+        (
+            {
                     "test_url": "http://holberton.io",
                     "test_payload": {"payload": False}
-                    }
-                ]
-        for test_case in test_cases:
-            with self.subTest(test_case=test_case):
-                mock_get.return_value = Mock()
-                mock_get.return_value.json.return_value =\
-                    test_case['test_payload']
+            }
+        )
+    ])
+    @patch('utils.requests.get')
+    def test_get_json(self, test_case, mock_get):
+        with self.subTest(test_case=test_case):
+            mock_get.return_value = Mock()
+            mock_get.return_value.json.return_value =\
+                test_case['test_payload']
 
-                result = get_json(test_case['test_url'])
-
-                mock_get.assert_called_once_with(test_case['test_url'])
-
-                self.assertEqual(result, test_case['test_payload'])
+            result = get_json(test_case['test_url'])
+            mock_get.assert_called_once_with(test_case['test_url'])
+            self.assertEqual(result, test_case['test_payload'])
 
 
 if __name__ == "__main__":
