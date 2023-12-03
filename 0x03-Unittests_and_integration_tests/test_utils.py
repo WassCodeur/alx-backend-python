@@ -56,6 +56,10 @@ class TestAccessNestedMap(unittest.TestCase):
 
 
 class TestGetJson(unittest.TestCase):
+    """test get json class
+
+    inherit from unittest.TestCase
+    """
 
     @parameterized.expand([
         (
@@ -95,6 +99,10 @@ class TestGetJson(unittest.TestCase):
 
 
 class TestMemoize(unittest.TestCase):
+    """test memoize class
+
+    inherit from unnittest.TestCase
+    """
 
     def test_memoize(self):
         """test memoize
