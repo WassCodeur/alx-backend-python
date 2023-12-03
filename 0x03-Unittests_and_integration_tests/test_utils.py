@@ -42,7 +42,6 @@ class TestGetJson(unittest.TestCase):
             }
         )
     ])
-    @patch('utils.requests.get')
     def test_get_json(self, test_case, mock_get):
         with self.subTest(test_case=test_case):
             mock_get.return_value = Mock()
